@@ -20,7 +20,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -63,7 +63,7 @@ export const EmployeeForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
 }) => {
-  const params = useParams();
+
   const router = useRouter();
   const { toast } = useToast();
   const [, setOpen] = useState(false);
