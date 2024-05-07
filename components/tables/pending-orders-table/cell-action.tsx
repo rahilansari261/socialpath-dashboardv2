@@ -8,19 +8,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Employee } from "@/constants/data";
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
-import {  useRouter } from "next/navigation";
+import { Order } from "@/constants/data";
+import { CircleCheck, CircleX, MoreHorizontal } from "lucide-react";
+
 import { useState } from "react";
 
 interface CellActionProps {
-  data: Employee;
+  data: Order;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  const [loading, ] = useState(false);
+  const [loading] = useState(false);
   const [open, setOpen] = useState(false);
-  const router = useRouter();
 
   const onConfirm = async () => {};
 
@@ -31,6 +30,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onClose={() => setOpen(false)}
         onConfirm={onConfirm}
         loading={loading}
+        title="Confirm"
+        description="Are you sure you want to accept this user?"
       />
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
@@ -42,13 +43,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-          <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/user/${data.id}`)}
-          >
-            <Edit className="mr-2 h-4 w-4" /> Update
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            <CircleCheck className="mr-2 h-4 w-4" /> Accept
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" /> Delete
+            <CircleX className="mr-2 h-4 w-4" /> Reject
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

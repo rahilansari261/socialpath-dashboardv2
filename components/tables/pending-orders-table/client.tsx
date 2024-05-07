@@ -1,26 +1,23 @@
 "use client";
-// import { Button } from "@/components/ui/button";
+
 import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { User } from "@/constants/data";
-// import { Plus } from "lucide-react";
-// import { useRouter } from "next/navigation";
+import { Order } from "@/constants/data";
+
 import { columns } from "./columns";
 
 interface ProductsClientProps {
-  data: User[];
+  data: Order[];
 }
 
-export const UserClient: React.FC<ProductsClientProps> = ({ data }) => {
-  // const router = useRouter();/
-
+export const PendingOrdersTable: React.FC<ProductsClientProps> = ({ data }) => {
   return (
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Users (${data.length})`}
-          description="Manage users (Client side table functionalities.)"
+          title={`Pending Orders (${data.length})`}
+          description="Manage pending orders "
         />
         {/* <Button
           className="text-xs md:text-sm"

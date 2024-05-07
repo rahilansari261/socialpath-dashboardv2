@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { addDays, format } from "date-fns";
+import { format, subDays } from "date-fns";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
 
@@ -16,8 +16,8 @@ export function CalendarDateRangePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2023, 0, 20),
-    to: addDays(new Date(2023, 0, 20), 20),
+    from: subDays(new Date(), 3),
+    to: new Date(),
   });
 
   return (
