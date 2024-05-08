@@ -6,12 +6,37 @@ import { Separator } from "@/components/ui/separator";
 import { Order } from "@/constants/data";
 
 import { columns } from "./columns";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { formatBeautifulDate } from "@/lib/utils";
+import { fetchData } from "next-auth/client/_utils";
 
 interface ProductsClientProps {
   data: Order[];
 }
 
-export const PendingOrdersTable: React.FC<ProductsClientProps> = ({ data }) => {
+export const PendingOrdersTable = () => {
+  const [data, setData] = React.useState<Order[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/orders");
+        console.log(response.data);
+
+        const data = response.data.orders.map((order: Order) => ({
+          ...order,
+          created_at: formatBeautifulDate(order.created_at),
+        }));
+
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        // Optionally handle the error by setting state or alerting the user
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <div className="flex items-start justify-between">

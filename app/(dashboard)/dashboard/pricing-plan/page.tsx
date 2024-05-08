@@ -12,18 +12,7 @@ export default function Page() {
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-5">
         <BreadCrumb items={breadcrumbItems} />
-        <PricingPlanForm
-          plans={[
-            { _id: "basic", name: "Basic" },
-            { _id: "gold", name: "Gold" },
-            { _id: "core", name: "Core" },
-            { _id: "elite", name: "Elite" },
-            { _id: "premium", name: "Premium" },
-            { _id: "diamond", name: "Diamond" },
-          ]}
-          initialData={null}
-          key={null}
-        />
+        <PricingPlanForm initialData={null} key={null} />
       </div>
     </ScrollArea>
   );
