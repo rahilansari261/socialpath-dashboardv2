@@ -113,7 +113,7 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
         ...data,
         features: featuresWithoutId,
       };
-      console.log(newData);
+
       await axios("/api/pricing-plan", {
         method: "POST",
         headers: {

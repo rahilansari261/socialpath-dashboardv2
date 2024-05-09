@@ -10,7 +10,7 @@ interface AlertModalProps {
   loading: boolean;
   title?: string;
   description?: string;
-
+  continueVariant?: "default" | "destructive";
 }
 
 export const AlertModal: React.FC<AlertModalProps> = ({
@@ -20,6 +20,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
   loading,
   title,
   description,
+  continueVariant = "default",
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -42,7 +43,11 @@ export const AlertModal: React.FC<AlertModalProps> = ({
         <Button disabled={loading} variant="outline" onClick={onClose}>
           Cancel
         </Button>
-        <Button disabled={loading} variant={"default" || "destructive"} onClick={onConfirm}>
+        <Button
+          disabled={loading}
+          variant={continueVariant}
+          onClick={onConfirm}
+        >
           Continue
         </Button>
       </div>

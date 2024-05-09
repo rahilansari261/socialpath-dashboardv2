@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { getServerSession } from "next-auth";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
           {children}
         </Providers>
       </body>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
     </html>
   );
 }

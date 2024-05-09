@@ -4,17 +4,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-interface PricingPlan {
-  planName: string;
-  price: number;
-  description: string;
-  features: Feature[];
-}
-
-interface Feature {
-  feature: string;
-}
-
 // export async function GET(req: NextApiRequest, res: NextApiResponse) {
 //   // Get all pricing plans
 //   const allPlans: PricingPlan[] = await prisma.plan.findMany();

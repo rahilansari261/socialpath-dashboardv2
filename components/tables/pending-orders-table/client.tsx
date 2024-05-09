@@ -9,19 +9,13 @@ import { columns } from "./columns";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { formatBeautifulDate } from "@/lib/utils";
-import { fetchData } from "next-auth/client/_utils";
-
-interface ProductsClientProps {
-  data: Order[];
-}
 
 export const PendingOrdersTable = () => {
   const [data, setData] = React.useState<Order[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/orders");
-        console.log(response.data);
+        const response = await axios.get("/api/orders?status=pending");
 
         const data = response.data.orders.map((order: Order) => ({
           ...order,
@@ -30,7 +24,6 @@ export const PendingOrdersTable = () => {
 
         setData(data);
       } catch (error) {
-        console.error("Error fetching data: ", error);
         // Optionally handle the error by setting state or alerting the user
       }
     };

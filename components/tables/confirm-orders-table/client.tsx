@@ -15,8 +15,7 @@ export const ConfirmOrdersTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/orders");
-        console.log(response.data);
+        const response = await axios.get("/api/orders?status=accepted");
 
         const data = response.data.orders.map((order: Order) => ({
           ...order,
@@ -25,7 +24,6 @@ export const ConfirmOrdersTable = () => {
 
         setData(data);
       } catch (error) {
-        console.error("Error fetching data: ", error);
         // Optionally handle the error by setting state or alerting the user
       }
     };
