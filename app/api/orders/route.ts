@@ -1,6 +1,5 @@
 // pages/api/pricing-plan.ts
 import { PrismaClient, order_status } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -73,11 +72,3 @@ export async function POST(req: Request) {
 //     res.status(500).json({ error });
 //   }
 // }
-
-export async function DEL(req: NextApiRequest, res: NextApiResponse) {
-  // Delete a pricing plan
-  const deletedPlan = await prisma.plan.delete({
-    where: { id: req.body.id },
-  });
-  res.json(deletedPlan);
-}
