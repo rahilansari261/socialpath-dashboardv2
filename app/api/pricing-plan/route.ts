@@ -1,6 +1,6 @@
 // pages/api/pricing-plan.ts
 import { PrismaClient } from "@prisma/client";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 //   res.json(allPlans);
 // }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const plan: any = await req.json();
 
@@ -20,26 +20,8 @@ export async function POST(req: Request) {
       },
     });
 
-    return Response.json({ newPlan });
+    return NextResponse.json({ newPlan });
   } catch (error) {
-    return Response.json({ error });
+    return NextResponse.json({ error });
   }
 }
-
-export async function PUT(req: NextApiRequest, res: NextApiResponse) {
-  // Update a pricing plan and its features
-  const updatedPlan = await prisma.plan.update({
-    where: { id: req.body.id },
-    data: {
-      ...req.body,
-      features: {
-        // Assuming complete replacement of features or similar logic
-        deleteMany: {}, // Empty condition deletes all
-        create: req.body.features,
-      },
-    },
-  });
-  res.json(updatedPlan);
-}
-
-
