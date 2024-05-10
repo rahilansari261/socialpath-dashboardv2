@@ -1,7 +1,7 @@
 // pages/api/pricing-plan.ts
 
 import { PrismaClient } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
+
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -64,11 +64,3 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error, status: 500 });
   }
 }
-
-// export async function DEL(req: NextApiRequest, res: NextApiResponse) {
-//   // Delete a pricing plan
-//   const deletedPlan = await prisma.plan.delete({
-//     where: { id: req.body.id },
-//   });
-//   res.json(deletedPlan);
-// }
