@@ -1,5 +1,5 @@
 // pages/api/pricing-plan.ts
-import { cn } from "@/lib/utils";
+
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";

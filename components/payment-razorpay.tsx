@@ -99,8 +99,7 @@ const PaymentRazorPay = () => {
       body: JSON.stringify(data),
     });
     const res = await response.json();
-    const result = res.order
-    console.log(result);
+    const result = res.order;
 
     const options = {
       key: process.env.RAZORPAY_KEY_ID, // Moved to public env variable
@@ -126,7 +125,7 @@ const PaymentRazorPay = () => {
         color: "#3399cc",
       },
     };
-    console.log(options);
+
     var paymentObject = new window.Razorpay(options);
     paymentObject.open();
   };

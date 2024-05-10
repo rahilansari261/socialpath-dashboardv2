@@ -34,7 +34,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data, fetchData }) => {
   const onConfirm = async () => {
     try {
       setOpen(false);
-      const res = await axios(`/api/orders/${data.id}`, {
+      await axios(`/api/orders/${data.id}`, {
         method: "PUT",
         data: {
           status: title === "Accept" ? "accepted" : "rejected",
