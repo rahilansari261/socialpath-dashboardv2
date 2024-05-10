@@ -65,10 +65,10 @@ export async function PUT(req: NextRequest, res: NextResponse) {
   }
 }
 
-export async function DEL(req: NextApiRequest, res: NextApiResponse) {
-  // Delete a pricing plan
-  const deletedPlan = await prisma.plan.delete({
-    where: { id: req.body.id },
-  });
-  res.json(deletedPlan);
-}
+// export async function DEL(req: NextApiRequest, res: NextApiResponse) {
+//   // Delete a pricing plan
+//   const deletedPlan = await prisma.plan.delete({
+//     where: { id: req.body.id },
+//   });
+//   res.json(deletedPlan);
+// }
