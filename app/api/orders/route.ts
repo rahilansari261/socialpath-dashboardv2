@@ -7,18 +7,16 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   try {
-    const statusString = req.nextUrl.searchParams.get("status");
+    const statusString = req.nextUrl.searchParams.get("status") as order_status
 
     // Validate statusString to ensure it matches the 'order_status' type
     if (!statusString || !isValidStatus(statusString)) {
       throw new Error("Invalid or missing status parameter");
     }
 
-    const status: order_status = statusString as order_status;
-
     const orders: any = await prisma.order.findMany({
       where: {
-        status: status,
+        status: statusString,
       },
     });
 
