@@ -14,11 +14,14 @@ datasource db {
 }
 
 model Plan {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   planName    String
   price       Float
   description String
   features    Json
+  User        User[]
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
 
 enum order_status {
@@ -27,10 +30,32 @@ enum order_status {
   rejected
 }
 
+enum userRole {
+  admin
+  user
+}
+
 model Order {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   pricing_plan String
-  created_at   DateTime
-  status       order_status
+
+  status     order_status
+  User       User?        @relation(fields: [userId], references: [id])
+  userId     String?      @db.ObjectId
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+}
+
+model User {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  role       userRole
+  email      String   @unique
+  password   String
+  plan       Plan?    @relation(fields: [planId], references: [id])
+  planId     String?  @db.ObjectId
+  orders     Order[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

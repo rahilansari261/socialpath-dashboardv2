@@ -1,5 +1,5 @@
 // pages/api/pricing-plan.ts
-import { PrismaClient, order_status } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   try {
-    const statusString = req.nextUrl.searchParams.get("status") as order_status
+    const statusString = req.nextUrl.searchParams.get("status");
 
     // Validate statusString to ensure it matches the 'order_status' type
     if (!statusString || !isValidStatus(statusString)) {

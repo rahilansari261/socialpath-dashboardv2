@@ -254,10 +254,11 @@ export const navItems: NavItem[] = [
     icon: "user",
     label: "user",
   },
-  {
-    title: "Logout",
-    href: "/",
-    icon: "logout",
-    label: "logout",
-  },
+  // {
+  //   title: "Logout",
+  //   icon: "logout",
+  //   label: "logout",
+  //   func: signOut;
+
+  // },
 ];

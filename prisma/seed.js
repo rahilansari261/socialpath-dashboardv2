@@ -1,197 +1,33 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient, userRole } = require("@prisma/client");
+const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
-async function main() {
-  const data = [
-    {
-      name: "Candice Schiner",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
+async function seedAdmin() {
+  // Create a new user
+  const existingAdmin = await prisma.user.findFirst({
+    where: {
+      role: userRole.admin,
     },
-    {
-      name: "John Doe",
-      pricing_plan: "Diamond",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Alice Johnson",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "David Smith",
-      pricing_plan: "Premium",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "Emma Wilson",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "James Brown",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "Laura White",
-      pricing_plan: "Gold",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Michael Lee",
-      pricing_plan: "Core",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Olivia Green",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Robert Taylor",
-      pricing_plan: "Elite",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "Candice Schiner",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "John Doe",
-      pricing_plan: "Diamond",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Alice Johnson",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "David Smith",
-      pricing_plan: "Premium",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "Emma Wilson",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "James Brown",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Laura White",
-      pricing_plan: "Gold",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Michael Lee",
-      pricing_plan: "Core",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Olivia Green",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Robert Taylor",
-      pricing_plan: "Elite",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Candice Schiner",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "John Doe",
-      pricing_plan: "Diamond",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "Alice Johnson",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "David Smith",
-      pricing_plan: "Premium",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "Emma Wilson",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "James Brown",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Laura White",
-      pricing_plan: "Gold",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-    {
-      name: "Michael Lee",
-      pricing_plan: "Core",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Olivia Green",
-      pricing_plan: "Basic",
-      created_at: new Date("2024-01-01"),
-      status: "accepted",
-    },
-    {
-      name: "Robert Taylor",
-      pricing_plan: "Elite",
-      created_at: new Date("2024-01-01"),
-      status: "pending",
-    },
-  ];
-
-  // Insert data into the 'orders' collection
-  for (const item of data) {
-    await prisma.order.create({
-      data: item,
-    });
+  });
+  if (existingAdmin) {
+    return;
   }
+  const hashedPassword = await bcrypt.hash("admin@1234", 10);
+  await prisma.user.create({
+    data: {
+      name: "Admin ",
+      role: userRole.admin,
+      email: "admin@gmail.com",
+      password: hashedPassword,
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
+  });
 }
+
+const main = async () => {
+  await seedAdmin();
+};
 
 main()
   .catch((e) => {

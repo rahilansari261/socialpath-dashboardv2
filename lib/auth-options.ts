@@ -1,36 +1,59 @@
+import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
 import CredentialProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+
+const prisma = new PrismaClient();
+
+// interface User {
+//   id: number;
+//   name: string;
+//   email: string;
+//   password: string;
+// }
+
+type Credentials = {
+  email: string;
+  password: string;
+};
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID ?? "",
-      clientSecret: process.env.GITHUB_SECRET ?? "",
-    }),
     CredentialProvider({
+      name: "Credentials", // Added for clarity
       credentials: {
-        email: {
-          label: "email",
-          type: "email",
-          placeholder: "example@gmail.com",
-        },
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        const user = { id: "1", name: "John", email: credentials?.email };
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
+      async authorize(credentials: Credentials | undefined, req) {
+        if (!credentials) return null;
+        const { email, password } = credentials;
 
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+        // Fetch the user by email
+        const user = await prisma.user.findUnique({
+          where: {
+            email,
+          },
+        });
+
+        // If user is found and passwords match
+        if (user && (await bcrypt.compare(password, user.password))) {
+          // Return the user object excluding the password
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { password, ...userWithoutPassword } = user;
+          return userWithoutPassword;
         }
+        // If user not found or passwords don't match
+
+        return null;
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/", //sigin page
+    signIn: "/auth/signin", // Consider specifying a dedicated sign-in page
   },
 };

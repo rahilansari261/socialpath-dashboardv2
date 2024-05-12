@@ -8,6 +8,7 @@ export interface NavItem {
   icon?: keyof typeof Icons;
   label?: string;
   description?: string;
+  func?: () => void;
 }
 
 export interface NavItemWithChildren extends NavItem {
@@ -31,4 +32,8 @@ export type MainNavItem = NavItemWithOptionalChildren;
 
 export type SidebarNavItem = NavItemWithChildren;
 
-
+export enum order_status {
+  pending,
+  accepted,
+  rejected,
+}
