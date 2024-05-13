@@ -28,7 +28,7 @@ export function hasDraggableData<T extends Active | Over>(
   return false;
 }
 
-export function formatBeautifulDate(dateString: string): string {
+export function formatBeautifulDate(dateString: Date): string {
   // Create a new Date object using the input string
   const date = new Date(dateString);
 

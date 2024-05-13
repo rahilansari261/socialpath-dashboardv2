@@ -3,17 +3,33 @@
 import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { User } from "@/constants/data";
-// import { Plus } from "lucide-react";
-// import { useRouter } from "next/navigation";
+
 import { columns } from "./columns";
 
-interface ProductsClientProps {
-  data: User[];
-}
+import React, { useEffect } from "react";
+import { formatBeautifulDate } from "@/lib/utils";
+import axios from "axios";
+import { User } from "@prisma/client";
 
-export const UserClient: React.FC<ProductsClientProps> = ({ data }) => {
-  // const router = useRouter();/
+export const UserClient = () => {
+  const [data, setData] = React.useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/users");
+
+        const data = response.data.map((user: User) => ({
+          ...user,
+          created_at: formatBeautifulDate(user.created_at),
+        }));
+
+        setData(data);
+      } catch (error) {}
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>

@@ -82,24 +82,12 @@ export const orders: Order[] = [
 
 export type User = {
   id: number;
-  first_name?: string;
-  last_name?: string;
   name: string;
   phone: string;
   email: string;
   pricing_plan: string;
   instagram_id: string | null;
-  gender?: string;
-  date_of_birth?: string; // Consider using a proper date type if possible
-  street?: string;
   city?: string;
-  state?: string;
-  country?: string;
-  zipcode?: string;
-  longitude?: number; // Optional field
-  latitude?: number; // Optional field
-  job?: string;
-  profile_picture?: string | null; // Profile picture can be a string (URL) or null (if no picture)
   created_at?: string;
   status?: string;
 };

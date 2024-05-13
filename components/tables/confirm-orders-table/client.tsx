@@ -4,10 +4,11 @@ import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { columns } from "./columns";
-import { Order } from "@/constants/data";
+
 import React, { useEffect } from "react";
 import axios from "axios";
 import { formatBeautifulDate } from "@/lib/utils";
+import { Order } from "@prisma/client";
 
 export const ConfirmOrdersTable = () => {
   const [data, setData] = React.useState<Order[]>([]);

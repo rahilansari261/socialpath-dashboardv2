@@ -168,31 +168,9 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Plan Name</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a plan from below list." />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="basic">Basic</SelectItem>
-                      <SelectItem value="gold">Gold</SelectItem>
-                      <SelectItem value="core">Core</SelectItem>
-                      <SelectItem value="elite">Elite</SelectItem>
-                      <SelectItem value="premium">Premium</SelectItem>
-                      <SelectItem value="diamond">Diamond</SelectItem>
-
-                      {/* {plans.map((plan: Plan) => (
-                        <SelectItem key={plan._id} value={plan._id}>
-                          {plan.name}
-                        </SelectItem>
-                      ))} */}
-                    </SelectContent>
-                  </Select>
-
+                  <FormControl>
+                    <Input type="text" disabled={loading} {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

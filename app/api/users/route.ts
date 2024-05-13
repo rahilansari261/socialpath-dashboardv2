@@ -1,12 +1,15 @@
-// pages/api/pricing-plan.ts
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
-  const allPlans: any = await prisma.plan.findMany();
-  return NextResponse.json(allPlans);
+  const allUsers: User[] = await prisma.user.findMany({
+    where: {
+      role: "user",
+    },
+  });
+  return NextResponse.json(allUsers);
 }
 
 export async function POST(req: NextRequest) {

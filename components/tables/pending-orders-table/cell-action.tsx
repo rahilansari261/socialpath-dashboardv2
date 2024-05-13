@@ -9,7 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { Order } from "@/constants/data";
+import { Order } from "@prisma/client";
+
 
 import axios from "axios";
 
