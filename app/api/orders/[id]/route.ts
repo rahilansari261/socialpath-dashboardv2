@@ -1,26 +1,36 @@
 // pages/api/pricing-plan.ts
 
-import { PrismaClient } from "@prisma/client";
+import { Order, PrismaClient } from "@prisma/client";
 
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-// export async function GET(req: NextApiRequest, res: NextApiResponse) {
-//   try {
+export async function GET(req: NextRequest, res: NextResponse) {
+  try {
+    const id = req.nextUrl.pathname.split("/").pop();
+    if (!id) {
+      return NextResponse.json(
+        { message: "Please provide an id." },
+        { status: 400 }
+      );
+    }
 
-//     const orders: any = await prisma.order.findMany({
-//       where: {
-//         status: false,
-//       },
-//     });
+    const order: Order | null = await prisma.order.findFirst({
+      where: {
+        id: id,
+      },
+    });
 
-//     return Response.json({ orders: orders });
-//   } catch (error) {
+    if (!order) {
+      return NextResponse.json({ message: "Order not found" }, { status: 404 });
+    }
 
-//     return Response.json({ error });
-//   }
-// }
+    return NextResponse.json(order);
+  } catch (error) {
+    return Response.json({ error });
+  }
+}
 
 export async function POST(req: Request) {
   try {
