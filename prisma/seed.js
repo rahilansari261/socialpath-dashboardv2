@@ -209,7 +209,7 @@ async function seedUser() {
 
 const main = async () => {
   await seedAdmin();
-  // await seedOrder();
+  await seedOrder();
   await seedUser();
 };
 
