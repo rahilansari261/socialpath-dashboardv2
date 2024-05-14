@@ -1,5 +1,6 @@
 // pages/api/pricing-plan.ts
-import { PrismaClient } from "@prisma/client";
+
+import { PrismaClient, order_status } from "@prisma/client";
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,7 +17,7 @@ export async function GET(req: NextRequest) {
 
     const orders: any = await prisma.order.findMany({
       where: {
-        status: statusString,
+        status: statusString as order_status,
       },
     });
 
@@ -27,7 +28,8 @@ export async function GET(req: NextRequest) {
 }
 
 function isValidStatus(status: string): boolean {
-  return ["pending", "accepted", "rejected"].includes(status);
+  const validStatuses = ["pending", "accepted", "rejected"];
+  return validStatuses.includes(status);
 }
 export async function POST(req: Request) {
   try {
