@@ -32,7 +32,9 @@ export const authOptions: NextAuthOptions = {
         // If user is found and passwords match
         if (user && (await bcrypt.compare(password, user.password))) {
           // Return the user object excluding the password
-          const { password: _, ...userWithoutPassword } = user;
+          
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { password, ...userWithoutPassword } = user;
 
           return userWithoutPassword;
         }
