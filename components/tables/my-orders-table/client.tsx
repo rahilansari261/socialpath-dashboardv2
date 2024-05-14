@@ -26,12 +26,12 @@ export const MyOrdersTable = () => {
       try {
         if (sesData?.user?.id) {
           const response = await axios.get(`/api/orders/${sesData?.user?.id}`);
-
-          const data = response.data.orders.map((order: Order) => ({
+         
+          const result = response.data.map((order: Order) => ({
             ...order,
             created_at: formatBeautifulDate(order.created_at),
           }));
-          setData(data);
+          setData(result);
         }
       } catch (error) {
         // Optionally handle the error by setting state or alerting the user
@@ -40,6 +40,7 @@ export const MyOrdersTable = () => {
 
     fetchData();
   }, [sesData?.user?.id]);
+
 
   return (
     <>

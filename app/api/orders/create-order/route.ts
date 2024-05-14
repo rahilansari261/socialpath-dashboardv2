@@ -1,31 +1,44 @@
 // pages/api/create-order.js
-import { NextRequest, NextResponse } from "next/server";
-import Razorpay from "razorpay";
 
+import { Order, PrismaClient, order_status } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
+
+const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
   try {
-    const { amount } = await req.json(); // Amount should be in smallest currency unit (e.g., paise)
-    const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } = process.env;
+    // Extract order data from request body
+    const {
+      name,
+      pricing_plan,
+      userId,
+      razorpay_payment_id,
+      razorpay_order_id,
+    }: Order = await req.json();
 
-    if (RAZORPAY_KEY_ID === undefined || RAZORPAY_KEY_SECRET === undefined) {
-      throw new Error("Missing RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET");
+    if (!name || !pricing_plan || !userId) {
+      throw new Error("Missing required parameters");
     }
 
-    const razorpay = new Razorpay({
-      key_id: RAZORPAY_KEY_ID,
-      key_secret: RAZORPAY_KEY_SECRET,
+    // Create the order in the database using Prisma Client
+    const order: Order = await prisma.order.create({
+      data: {
+        name,
+        pricing_plan,
+        status: order_status.pending,
+        userId,
+        razorpay_payment_id,
+        razorpay_order_id,
+      },
     });
 
-    const options = {
-      amount: parseInt(amount) * 100, // converting rupees to paise
-      currency: "INR",
-      receipt: "receipt#1",
-    };
-
-    const order = await razorpay.orders.create(options);
-
-    return NextResponse.json({ order, status: 200 });
+    // Return the created order as the API response
+    return NextResponse.json({ success: true, order });
   } catch (error) {
-    return NextResponse.json({ message: "Something went wrong!", status: 200 });
+  
+    // Return an error response if something goes wrong
+    return NextResponse.json({
+      success: false,
+      error: "Failed to create order",
+    });
   }
 }

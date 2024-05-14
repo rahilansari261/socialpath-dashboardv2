@@ -1,6 +1,6 @@
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient, User, userRole } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
+import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -9,21 +9,51 @@ export async function GET(req: NextRequest, res: NextResponse) {
       role: "user",
     },
   });
-  return NextResponse.json(allUsers);
+  if (!allUsers) {
+    return NextResponse.json({ message: "No users found." }, { status: 404 });
+  }
+  return NextResponse.json({ message: "User registered.", users: allUsers });
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const plan: any = await req.json();
-
-    const newPlan = await prisma.plan.create({
-      data: {
-        ...plan,
+    const { name, email, password, phone } = await req.json();
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [{ email }, { phone }],
       },
     });
 
-    return NextResponse.json({ newPlan });
+    if (existingUser) {
+      if (existingUser.email === email) {
+        return NextResponse.json(
+          { message: "Email is already registered." },
+          { status: 400 }
+        );
+      } else {
+        return NextResponse.json(
+          { message: "Phone number is already registered." },
+          { status: 400 }
+        );
+      }
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role: userRole.user,
+        phone,
+      },
+    });
+
+    return NextResponse.json({ message: "User registered." }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error });
+    return NextResponse.json(
+      { message: "An error occurred while registering the user." },
+      { status: 500 }
+    );
   }
 }

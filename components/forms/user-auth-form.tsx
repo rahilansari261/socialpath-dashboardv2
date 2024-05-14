@@ -16,6 +16,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import GoogleSignInButton from "../github-auth-button";
+import axios from "axios";
+
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: "Enter a valid email address" }),
@@ -33,6 +35,7 @@ const registerFormSchema = z
     confirmPassword: z.string().min(8, {
       message: "Confirm Password must be at least 8 characters long",
     }),
+    phone: z.string().min(10, { message: "Phone number is required" }),
   })
   .refine(
     (values) => {
@@ -134,21 +137,21 @@ export function LoginForm() {
           </Button>
         </form>
       </Form>
-      {error && (
-        <div className="text-red-600 text-sm">{error}</div>
-      )}
+      {error && <div className="text-red-600 text-sm">{error}</div>}
     </div>
   );
 }
 
 export function RegisterForm() {
   const [loading] = useState(false);
-
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
   const defaultValues = {
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
+    Phone: "",
   };
 
   const form = useForm<RegisterFormValue>({
@@ -156,7 +159,23 @@ export function RegisterForm() {
     defaultValues,
   });
 
-  const onSubmitRegister = async (data: RegisterFormValue) => {};
+  const onSubmitRegister = async (data: RegisterFormValue) => {
+    try {
+       await axios(`/api/users`, {
+        method: "POST",
+        data: {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          phone: data.phone,
+        },
+      });
+
+      router.replace("/dashboard");
+    } catch (error: any) {
+      setError(error?.response?.data.message);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -212,6 +231,24 @@ export function RegisterForm() {
           />
           <FormField
             control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Enter your phone number..."
+                    disabled={loading}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
@@ -252,6 +289,7 @@ export function RegisterForm() {
           </Button>
         </form>
       </Form>
+      {error && <div className="text-red-600 text-sm">{error}</div>}
     </div>
   );
 }

@@ -16,9 +16,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
       );
     }
 
-    const order: Order | null = await prisma.order.findFirst({
+    const order: Order[] | null = await prisma.order.findMany({
       where: {
-        id: id,
+        userId: id,
       },
     });
 
