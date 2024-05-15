@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
         // If user is found and passwords match
         if (user && (await bcrypt.compare(password, user.password))) {
           // Return the user object excluding the password
-          
+
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { password, ...userWithoutPassword } = user;
 
@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
 
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/signin", // Consider specifying a dedicated sign-in page
+    signIn: "/signin",
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -70,8 +70,6 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.role = token.role as userRole;
       }
-
-      // session.user.role = user.role as userRole;
 
       return session;
     },
