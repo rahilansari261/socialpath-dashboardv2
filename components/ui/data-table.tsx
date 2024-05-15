@@ -19,7 +19,7 @@ import {
 import { Input } from "./input";
 import { Button } from "./button";
 import { ScrollArea, ScrollBar } from "./scroll-area";
-import { CalendarDateRangePicker } from "../date-range-picker";
+// import { CalendarDateRangePicker } from "../date-range-picker";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -50,7 +50,7 @@ export function DataTable<TData, TValue>({
           }
           className="w-full md:max-w-sm"
         />
-        <CalendarDateRangePicker />
+        {/* <CalendarDateRangePicker /> */}
         <Button>Search</Button>
       </div>
       <ScrollArea className="rounded-md border h-[calc(80vh-220px)]">

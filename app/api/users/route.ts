@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   if (!allUsers) {
     return NextResponse.json({ message: "No users found." }, { status: 404 });
   }
-  return NextResponse.json({ message: "User registered.", users: allUsers });
+  return NextResponse.json({ message: "users fetched successfully. ", users: allUsers });
 }
 
 export async function POST(req: NextRequest) {

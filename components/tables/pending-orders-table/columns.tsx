@@ -40,6 +40,16 @@ export const columns: ColumnDef<Order>[] = [
   },
 
   {
+    accessorKey: "razorpay_order_id",
+    header: "ORDER ID",
+  },
+
+  {
+    accessorKey: "razorpay_payment_id",
+    header: "PAYMENT ID",
+  },
+
+  {
     accessorKey: "status",
     header: "STATUS",
     cell: ({ row }) => {

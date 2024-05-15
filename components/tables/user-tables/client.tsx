@@ -19,7 +19,7 @@ export const UserClient = () => {
       try {
         const response = await axios.get("/api/users");
 
-        const data = response.data.map((user: User) => ({
+        const data = response.data.users.map((user: User) => ({
           ...user,
           created_at: formatBeautifulDate(user.created_at),
         }));

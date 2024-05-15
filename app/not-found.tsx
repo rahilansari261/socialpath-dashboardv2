@@ -24,7 +24,7 @@ export default function NotFound() {
           Go back
         </Button>
         <Button
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/signin")}
           variant="ghost"
           size="lg"
         >
