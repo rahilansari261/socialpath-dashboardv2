@@ -1,17 +1,22 @@
 import { Metadata } from "next";
 import Link from "next/link";
-
+import { getServerSession } from "next-auth";
 import SignInForm from "@/components/forms/signin-form";
+import { authOptions } from "@/lib/auth-options";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Authentication",
   description: "Authentication forms built using the components.",
 };
 
-export default function Page() {
+export default async function Page() {
   // how to get session info  in server page
-  
-  
+  const session = await getServerSession(authOptions);
+  if (session) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
