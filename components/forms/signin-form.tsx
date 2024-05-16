@@ -31,8 +31,10 @@ export default function SignInForm() {
   const router = useRouter();
 
   const defaultValues = {
-    email: "admin@gmail.com",
-    password: "admin@1234",
+    email: "",
+    password: "",
+    // email: "admin@gmail.com",
+    // password: "admin@1234",
   };
 
   const signInForm = useForm<SignInFormValue>({
