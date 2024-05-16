@@ -33,12 +33,12 @@ export const navItems: NavItem[] = [
     icon: "user",
     label: "User",
   },
-  {
-    title: "My Orders",
-    href: "/dashboard/my-orders",
-    icon: "confirmOrders",
-    label: "My Orders",
-  },
+  // {
+  //   title: "My Orders",
+  //   href: "/dashboard/my-orders",
+  //   icon: "confirmOrders",
+  //   label: "My Orders",
+  // },
   // {
   //   title: "Logout",
   //   icon: "logout",
