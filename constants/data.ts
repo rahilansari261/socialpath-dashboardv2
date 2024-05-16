@@ -28,9 +28,9 @@ export const navItems: NavItem[] = [
     label: "Pricing Plan",
   },
   {
-    title: "User",
+    title: "Users",
     href: "/dashboard/user",
-    icon: "user",
+    icon: "users",
     label: "User",
   },
   // {

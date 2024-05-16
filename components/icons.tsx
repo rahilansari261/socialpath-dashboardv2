@@ -32,7 +32,9 @@ import {
   LayoutList,
   ListChecks,
   LogOut,
+  Users,
 } from "lucide-react";
+import { use } from "react";
 
 export type Icon = LucideIcon;
 
@@ -66,6 +68,7 @@ export const Icons = {
   pendingOrders: LayoutList,
   confirmOrders: ListChecks,
   logout: LogOut,
+  users: Users,
   google: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
