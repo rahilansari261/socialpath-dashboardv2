@@ -12,12 +12,15 @@ export async function GET(req: NextRequest, res: NextResponse) {
   if (!allUsers) {
     return NextResponse.json({ message: "No users found." }, { status: 404 });
   }
-  return NextResponse.json({ message: "users fetched successfully. ", users: allUsers });
+  return NextResponse.json({
+    message: "users fetched successfully. ",
+    users: allUsers,
+  });
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, password, phone } = await req.json();
+    const { name, username, email, password, phone } = await req.json();
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [{ email }, { phone }],
@@ -42,6 +45,7 @@ export async function POST(req: NextRequest) {
     await prisma.user.create({
       data: {
         name,
+        username,
         email,
         password: hashedPassword,
         role: userRole.user,

@@ -26,8 +26,10 @@ export const authOptions: NextAuthOptions = {
         const user: User | null = await prisma.user.findUnique({
           where: {
             email,
+            role: "admin",
           },
         });
+       
 
         // If user is found and passwords match
         if (user && (await bcrypt.compare(password, user.password))) {

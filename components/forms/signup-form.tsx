@@ -19,10 +19,10 @@ import GoogleSignInButton from "../github-auth-button";
 import axios from "axios";
 import Link from "next/link";
 
-
 const signUpFormSchema = z
   .object({
     name: z.string().min(2, { message: "Name is required" }),
+    username: z.string().min(2, { message: "Userame is required" }),
     email: z.string().email({ message: "Enter a valid email address" }),
     password: z
       .string()
@@ -46,8 +46,6 @@ const signUpFormSchema = z
 type SignUpFormValue = z.infer<typeof signUpFormSchema>;
 
 export function SignUpForm() {
-  
-
   const [loading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -57,6 +55,7 @@ export function SignUpForm() {
     password: "",
     confirmPassword: "",
     Phone: "",
+    username: "",
   };
 
   const form = useForm<SignUpFormValue>({
@@ -73,6 +72,7 @@ export function SignUpForm() {
           email: data.email,
           password: data.password,
           phone: data.phone,
+          username: data.username,
         },
       });
 
@@ -107,6 +107,25 @@ export function SignUpForm() {
                   <Input
                     type="text"
                     placeholder="Enter your name..."
+                    disabled={loading}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>User Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Enter your instagram username..."
                     disabled={loading}
                     {...field}
                   />
