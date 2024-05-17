@@ -17,22 +17,21 @@ export const PricingPlanTable = () => {
   const [data, setData] = React.useState<Plan[]>([]);
   const router = useRouter();
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("/api/pricing-plan");
+
+      const data = response.data.map((plan: Plan) => ({
+        ...plan,
+        created_at: formatBeautifulDate(plan.created_at),
+      }));
+
+      setData(data);
+    } catch (error) {
+      // Optionally handle the error by setting state or alerting the user
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/pricing-plan");
-
-        const data = response.data.map((plan: Plan) => ({
-          ...plan,
-          created_at: formatBeautifulDate(plan.created_at),
-        }));
-
-        setData(data);
-      } catch (error) {
-        // Optionally handle the error by setting state or alerting the user
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -45,7 +44,7 @@ export const PricingPlanTable = () => {
         />
         <Button
           className="text-xs md:text-sm"
-          onClick={() => router.push(`/dashboard/pricing-plan/new`)}
+          onClick={() => router.push(`/dashboard/pricing-plan/create`)}
         >
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>

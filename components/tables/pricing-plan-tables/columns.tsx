@@ -33,6 +33,14 @@ export const columns: ColumnDef<Plan>[] = [
     accessorKey: "price",
     header: "PRICE",
   },
+  {
+    accessorKey: "discount",
+    header: "DISCOUNT (%)",
+  },
+  {
+    accessorKey: "last_price",
+    header: "LAST PRICE",
+  },
 
   {
     accessorKey: "description",

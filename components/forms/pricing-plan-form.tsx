@@ -37,6 +37,10 @@ const formSchema = z.object({
   price: z.coerce
     .number()
     .positive({ message: "Price must be greater than 0" }),
+  discount: z.coerce
+    .number()
+    .positive({ message: "Price must be greater than 0" })
+    .lte(90, "discount can nveer be grater than 90%"),
   description: z
     .string()
     .min(3, "Product description must be at least 3 characters"),
@@ -70,9 +74,9 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
   const [, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit product" : "Create Pricing Plan";
+  const title = initialData ? "Update Pricing Plan" : "Create Pricing Plan";
   const description = initialData
-    ? "Edit a product."
+    ? "Update a pricing plan."
     : "Add a new pricing plan.";
   // const toastMessage = initialData ? "Product updated." : "Product created.";
   const action = initialData ? "Save changes" : "Create";
@@ -104,6 +108,7 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
       const featuresWithoutId = data.features.map(({ id, ...rest }) => rest);
       const newData = {
         ...data,
+        last_price: (data.price * (100 - data.discount)) / 100,
         features: featuresWithoutId,
       };
 
@@ -183,6 +188,19 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
             />
             <FormField
               control={form.control}
+              name="discount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Discount</FormLabel>
+                  <FormControl>
+                    <Input type="number" disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
@@ -200,8 +218,8 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
               )}
             />
             <div className="flex flex-col gap-2">
+              {/* <br /> */}
               <Label about="Features">Features</Label>
-              <br />
               {fields.map(({ id, feature }: Feature, index) => (
                 <FormField
                   key={id} // Important: Use item.id for keys in lists
