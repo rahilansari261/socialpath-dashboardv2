@@ -1,10 +1,9 @@
 // pages/api/pricing-plan.ts
 
-import { PrismaClient, order_status } from "@prisma/client";
+import { db } from "@/db";
+import { order_status } from "@prisma/client";
 
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   try {
@@ -15,7 +14,7 @@ export async function GET(req: NextRequest) {
       throw new Error("Invalid or missing status parameter");
     }
 
-    const orders: any = await prisma.order.findMany({
+    const orders: any = await db.order.findMany({
       where: {
         status: statusString as order_status,
       },
@@ -35,7 +34,7 @@ export async function POST(req: Request) {
   try {
     const plan: any = await req.json();
 
-    const newPlan = await prisma.plan.create({
+    const newPlan = await db.plan.create({
       data: {
         ...plan,
       },
@@ -61,7 +60,7 @@ export async function POST(req: Request) {
 //     }
 
 //     const { new_status }: { new_status: boolean } = req.body;
-//     const updatedPlan = await prisma.order.update({
+//     const updatedPlan = await db.order.update({
 //       where: { id: id },
 //       data: {
 //         status: new_status,

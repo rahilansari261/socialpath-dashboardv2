@@ -1,8 +1,7 @@
 // pages/api/pricing-plan.ts
-import { Plan, PrismaClient } from "@prisma/client";
+import { db } from "@/db";
+import { Plan } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const id = req.nextUrl.pathname.split("/").pop();
@@ -13,7 +12,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     );
   }
 
-  const plan: Plan | null = await prisma.plan.findFirst({
+  const plan: Plan | null = await db.plan.findFirst({
     where: {
       id: id,
     },
@@ -43,7 +42,7 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    await prisma.plan.delete({
+    await db.plan.delete({
       where: {
         id: id,
       },

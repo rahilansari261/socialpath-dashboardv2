@@ -1,10 +1,9 @@
 // pages/api/pricing-plan.ts
 
-import { Order, PrismaClient } from "@prisma/client";
+import { db } from "@/db";
+import { Order } from "@prisma/client";
 
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
@@ -16,7 +15,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       );
     }
 
-    const order: Order[] | null = await prisma.order.findMany({
+    const order: Order[] | null = await db.order.findMany({
       where: {
         userId: id,
       },
@@ -36,7 +35,7 @@ export async function POST(req: Request) {
   try {
     const plan: any = await req.json();
 
-    const newPlan = await prisma.plan.create({
+    const newPlan = await db.plan.create({
       data: {
         ...plan,
       },
@@ -62,7 +61,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     if (!status) {
       throw new Error("Invalid status");
     }
-    const updatedPlan = await prisma.order.update({
+    const updatedPlan = await db.order.update({
       where: { id: orderId },
       data: {
         status: status,

@@ -1,9 +1,9 @@
 // pages/api/create-order.js
 
-import { Order, PrismaClient, order_status } from "@prisma/client";
+import { db } from "@/db";
+import { Order, order_status } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
   try {
     // Extract order data from request body
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Create the order in the database using Prisma Client
-    const order: Order = await prisma.order.create({
+    const order: Order = await db.order.create({
       data: {
         name,
         pricing_plan,

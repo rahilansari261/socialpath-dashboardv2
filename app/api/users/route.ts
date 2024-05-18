@@ -1,10 +1,10 @@
-import { PrismaClient, User, userRole } from "@prisma/client";
+import { User, userRole } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-const prisma = new PrismaClient();
+import { db } from "@/db";
 
 export async function GET(req: NextRequest, res: NextResponse) {
-  const allUsers: User[] = await prisma.user.findMany({
+  const allUsers: User[] = await db.user.findMany({
     where: {
       role: "user",
     },
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 export async function POST(req: NextRequest) {
   try {
     const { name, username, email, password, phone } = await req.json();
-    const existingUser = await prisma.user.findFirst({
+    const existingUser = await db.user.findFirst({
       where: {
         OR: [{ email }, { phone }],
       },
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await prisma.user.create({
+    await db.user.create({
       data: {
         name,
         username,
