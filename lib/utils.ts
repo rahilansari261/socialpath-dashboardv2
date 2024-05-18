@@ -46,3 +46,15 @@ export function formatBeautifulDate(dateString: Date): string {
 }
 
 // Example usage
+export function getUnixTimestampAfterDays(daysToAdd: number) {
+  // Get the current date object
+  var currentDate = new Date();
+
+  // Add the specified number of days to the current date
+  currentDate.setDate(currentDate.getDate() + daysToAdd);
+
+  // Convert the modified date object to a Unix timestamp in seconds
+  var unixTimestamp = Math.floor(currentDate.getTime() / 1000);
+
+  return unixTimestamp;
+}

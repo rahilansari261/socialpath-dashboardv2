@@ -14,16 +14,18 @@ datasource db {
 }
 
 model Plan {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  planName    String
-  price       Float
-  discount    Float
-  last_price  Float
-  description String
-  features    Json
-  User        User[]
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  planName       String
+  price          Float
+  discount       Float
+  last_price     Float
+  description    String
+  features       Json
+  planId         String // This field will store the Razorpay plan ID
+  subscriptionId String // This field will store the Razorpay subscription ID, nullable as it may not be immediately available
+  User           User[]
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
 }
 
 enum order_status {
@@ -65,4 +67,19 @@ model User {
   city         String?
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
+}
+
+model Subscription {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  subscriptionId String
+  planId         String
+  customerNotify Int
+  quantity       Int
+  totalCount     Int
+  startAt        DateTime
+  status         String
+  addons         Json
+  notes          Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
