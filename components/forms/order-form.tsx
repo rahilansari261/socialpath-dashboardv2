@@ -73,24 +73,25 @@ export const OrderForm: React.FC<OrderFormProps> = ({ initialData }) => {
       setLoading(true);
       const plan = plans.find((plan) => plan.id === data2.planName);
 
-      const data = { amount: plan?.price, userID: sesData?.user.id };
-      const response = await fetch("/api/orders/create-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const res = await response.json();
-      const result = res.order;
+      // const data = { amount: plan?.price, userID: sesData?.user.id };
+      // const response = await fetch("/api/orders/create-payment", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // });
+      // const res = await response.json();
+      // const result = res.order;
 
       const options = {
         key: process.env.RAZORPAY_KEY_ID, // Moved to public env variable
-        amount: result.amount,
-        currency: result.currency,
+        subscription_id:plan?.subscriptionId,
+        // amount: result.amount,
+        // currency: result.currency,
         name: "SocialPath",
-        description: "Test Transaction",
-        order_id: result.id,
+        description: plan?.description,
+        // order_id: result.id,
         handler: async function (response: any) {
           const res = await axios("/api/orders/create-order", {
             method: "POST",
@@ -123,7 +124,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ initialData }) => {
           address: "note value",
         },
         theme: {
-          color: "#d15f3c",
+          color: "#105392",
         },
       };
 
