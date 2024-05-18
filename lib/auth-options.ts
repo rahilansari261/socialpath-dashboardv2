@@ -1,9 +1,8 @@
-import { PrismaClient, User, userRole } from "@prisma/client";
+import { User, userRole } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
+import { db } from "@/db";
 
 type Credentials = {
   email: string;
@@ -23,13 +22,12 @@ export const authOptions: NextAuthOptions = {
         const { email, password } = credentials;
 
         // Fetch the user by email
-        const user: User | null = await prisma.user.findUnique({
+        const user: User | null = await db.user.findUnique({
           where: {
             email,
             role: "admin",
           },
         });
-       
 
         // If user is found and passwords match
         if (user && (await bcrypt.compare(password, user.password))) {
