@@ -43,7 +43,6 @@ async function createPlanOnRazorpay(
     });
     return response;
   } catch (error) {
-    console.error("Error creating plan:", error);
     throw new Error("Failed to create plan on Razorpay");
   }
 }
@@ -57,9 +56,7 @@ async function createSubscriptionOnRazorpay(
   addons: any[]
   // notes: any
 ) {
-  console.log(planId, customerNotify, quantity, totalCount, addons);
   try {
-    console.log(getUnixTimestampAfterDays(7));
     const response = await razorpay.subscriptions.create({
       plan_id: planId,
       customer_notify: customerNotify,
@@ -70,7 +67,6 @@ async function createSubscriptionOnRazorpay(
     });
     return response;
   } catch (error) {
-    console.error("Error creating subscription:", error);
     throw new Error("Failed to create subscription on Razorpay");
   }
 }
@@ -144,9 +140,9 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ newPlan });
+    return NextResponse.json({ newPlan, newSubscription });
   } catch (error: any) {
-    console.error("Error:", error);
+
     return NextResponse.json({
       error: error.message || "Internal server error",
     });
