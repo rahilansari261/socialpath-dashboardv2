@@ -9,15 +9,18 @@ export async function GET(req: NextRequest, res: NextResponse) {
   return NextResponse.json(allPlans);
 }
 
-if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+const key_id = process.env.RAZORPAY_KEY_ID;
+const key_secret = process.env.RAZORPAY_KEY_SECRET;
+
+if (!key_id || !key_secret) {
   throw new Error(
     "Razorpay key_id and key_secret must be set in environment variables"
   );
 }
 
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
+  key_id,
+  key_secret,
 });
 
 async function createPlanOnRazorpay(
