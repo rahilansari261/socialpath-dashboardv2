@@ -16,17 +16,11 @@ async function createPlanOnRazorpay(
   description: string
 ) {
   try {
-    const key_id = process.env.RAZORPAY_KEY_ID;
-    const key_secret = process.env.RAZORPAY_KEY_SECRET;
-
-    if (!key_id || !key_secret) {
-      throw new Error(
-        "Razorpay key_id and key_secret must be set in environment variables"
-      );
-    }
+    const key_id: string = process.env.RAZORPAY_KEY_ID || "";
+    const key_secret: string = process.env.RAZORPAY_KEY_SECRET || "";
 
     const razorpay = new Razorpay({
-      key_id,
+      key_id: key_id,
       key_secret,
     });
 
