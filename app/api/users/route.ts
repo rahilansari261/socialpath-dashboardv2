@@ -20,7 +20,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, username, email, password, phone } = await req.json();
+    const { name, username, email, password, phone, subscriptionId } =
+      await req.json();
     const existingUser = await db.user.findFirst({
       where: {
         OR: [{ email }, { phone }],
@@ -50,6 +51,7 @@ export async function POST(req: NextRequest) {
         password: hashedPassword,
         role: userRole.user,
         phone,
+        subscriptionId,
       },
     });
 
