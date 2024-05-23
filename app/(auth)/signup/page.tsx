@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Link from "next/link";
+// import Link from "next/link";
 
 import { SignUpForm } from "@/components/forms/signup-form";
 import { getServerSession } from "next-auth";
@@ -25,7 +25,7 @@ export default async function Page() {
       <div className="p-4 lg:p-8 h-full flex items-center">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <SignUpForm />
-          <p className="px-8 text-center text-sm text-muted-foreground">
+          {/* <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{" "}
             <Link
               href="/terms"
@@ -41,7 +41,7 @@ export default async function Page() {
               Privacy Policy
             </Link>
             .
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import GoogleSignInButton from "../github-auth-button";
+// import GoogleSignInButton from "../github-auth-button";
 import axios from "axios";
 import Link from "next/link";
 
@@ -223,7 +223,7 @@ export function SignUpForm() {
           Sign in.
         </Link>
       </div>
-      <div className="relative">
+      {/* <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
@@ -232,8 +232,8 @@ export function SignUpForm() {
             Or continue with
           </span>
         </div>
-      </div>
-      <GoogleSignInButton />
+      </div> */}
+      {/* <GoogleSignInButton /> */}
     </div>
   );
 }
