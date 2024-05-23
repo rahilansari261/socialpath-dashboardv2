@@ -41,10 +41,10 @@ export function UserNav() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            {/* <DropdownMenuItem>
               Profile
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             {/* <DropdownMenuItem>
               Billing
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
