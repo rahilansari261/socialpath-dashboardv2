@@ -30,16 +30,29 @@ export const columns: ColumnDef<Plan>[] = [
     header: "PLAN NAME",
   },
   {
-    accessorKey: "price",
-    header: "PRICE",
+    accessorKey: "monthlyPrice",
+    header: "PRICE (Monthly)",
   },
   {
-    accessorKey: "discount",
-    header: "DISCOUNT (%)",
+    accessorKey: "monthlyDiscount",
+    header: "DISCOUNT (Monthly-%)",
   },
   {
-    accessorKey: "last_price",
-    header: "LAST PRICE",
+    accessorKey: "monthlyLastPrice",
+    header: "LAST PRICE (Monthly)",
+  },
+
+  {
+    accessorKey: "yearlyPrice",
+    header: "PRICE (Yearly)",
+  },
+  {
+    accessorKey: "yearlyDiscount",
+    header: "DISCOUNT (Yearly-%)",
+  },
+  {
+    accessorKey: "yearlyLastPrice",
+    header: "LAST PRICE (Yearly)",
   },
 
   {

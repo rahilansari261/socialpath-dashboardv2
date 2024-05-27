@@ -34,13 +34,22 @@ const featureSchema = z.object({
 
 const formSchema = z.object({
   planName: z.string().min(1, "Plan name is required"),
-  price: z.coerce
+  monthlyPrice: z.coerce
     .number()
     .positive({ message: "Price must be greater than 0" }),
-  discount: z.coerce
+  monthlyDiscount: z.coerce
     .number()
     .positive({ message: "Price must be greater than 0" })
     .lte(90, "discount can nveer be grater than 90%"),
+
+  yearlyPrice: z.coerce
+    .number()
+    .positive({ message: "Price must be greater than 0" }),
+  yearlyDiscount: z.coerce
+    .number()
+    .positive({ message: "Price must be greater than 0" })
+    .lte(90, "discount can nveer be grater than 90%"),
+
   description: z
     .string()
     .min(3, "Product description must be at least 3 characters"),
@@ -108,7 +117,9 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
       const featuresWithoutId = data.features.map(({ id, ...rest }) => rest);
       const newData = {
         ...data,
-        last_price: (data.price * (100 - data.discount)) / 100,
+        monthlyLastPrice:
+          (data.monthlyPrice * (100 - data.monthlyDiscount)) / 100,
+        yearlyLastPrice: (data.yearlyPrice * (100 - data.yearlyDiscount)) / 100,
         features: featuresWithoutId,
       };
 
@@ -175,10 +186,10 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="price"
+              name="monthlyPrice"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel>Price(Monthly)</FormLabel>
                   <FormControl>
                     <Input type="number" disabled={loading} {...field} />
                   </FormControl>
@@ -188,10 +199,10 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="discount"
+              name="monthlyDiscount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Discount</FormLabel>
+                  <FormLabel>Discount(Monthly)</FormLabel>
                   <FormControl>
                     <Input type="number" disabled={loading} {...field} />
                   </FormControl>
@@ -199,6 +210,34 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="yearlyPrice"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Price(Yearly)</FormLabel>
+                  <FormControl>
+                    <Input type="number" disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="yearlyDiscount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Discount(Yearly)</FormLabel>
+                  <FormControl>
+                    <Input type="number" disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="description"

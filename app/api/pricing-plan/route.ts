@@ -1,6 +1,6 @@
 // pages/api/pricing-plan.ts
 import { db } from "@/db";
-import { Prisma } from "@prisma/client";
+import { Plan, Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import Razorpay from "razorpay";
 
@@ -45,12 +45,12 @@ async function createPlanOnRazorpay(
 
 export async function POST(req: NextRequest) {
   try {
-    const plan = await req.json();
+    const plan: Plan = await req.json();
 
     // Create plan on Razorpay
     const razorpayPlan = await createPlanOnRazorpay(
       plan.planName,
-      plan.last_price,
+      plan.monthlyLastPrice,
       "INR",
       plan.description
     );
@@ -64,12 +64,12 @@ export async function POST(req: NextRequest) {
     const newPlan = await db.plan.create({
       data: {
         ...plan,
-        planId: razorpayPlan.id,
+        monthlyPlanId: razorpayPlan.id,
         features: plan.features as Prisma.InputJsonValue,
       },
     });
 
-    return NextResponse.json({ newPlan });
+    return NextResponse.json({ "Plan created successfully": newPlan });
   } catch (error: any) {
     return NextResponse.json({
       error: error.message || "Internal server error",

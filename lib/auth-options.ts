@@ -1,4 +1,4 @@
-import { User, userRole } from "@prisma/client";
+import { userRole } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -32,6 +32,8 @@ export const authOptions: NextAuthOptions = {
         // If user is found and passwords match
         if (user && (await bcrypt.compare(password, user.password))) {
           // Return the user object excluding the password
+
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { password: _, ...userWithoutPassword } = user;
           return userWithoutPassword;
         }
