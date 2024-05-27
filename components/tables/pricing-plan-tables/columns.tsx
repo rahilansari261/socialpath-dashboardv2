@@ -32,27 +32,57 @@ export const columns: ColumnDef<Plan>[] = [
   {
     accessorKey: "monthlyPrice",
     header: "PRICE (Monthly)",
+    cell: ({ cell }) => (
+      <div >
+        ₹{cell.row.original.monthlyPrice}
+      </div>
+    ),
   },
   {
     accessorKey: "monthlyDiscount",
-    header: "DISCOUNT (Monthly-%)",
+    header: "DISCOUNT (Monthly)",
+    cell: ({ cell }) => (
+      <div >
+        {cell.row.original.monthlyDiscount}%
+      </div>
+    ),
   },
   {
     accessorKey: "monthlyLastPrice",
     header: "LAST PRICE (Monthly)",
+    cell: ({ cell }) => (
+      <div >
+        ₹{cell.row.original.monthlyLastPrice}
+      </div>
+    ),
   },
 
   {
     accessorKey: "yearlyPrice",
     header: "PRICE (Yearly)",
+    cell: ({ cell }) => (
+      <div >
+        ₹{cell.row.original.yearlyPrice}
+      </div>
+    ),
   },
   {
     accessorKey: "yearlyDiscount",
-    header: "DISCOUNT (Yearly-%)",
+    header: "DISCOUNT (Yearly)",
+    cell: ({ cell }) => (
+      <div >
+        {cell.row.original.yearlyDiscount}%
+      </div>
+    ),
   },
   {
     accessorKey: "yearlyLastPrice",
     header: "LAST PRICE (Yearly)",
+    cell: ({ cell }) => (
+      <div >
+        ₹{cell.row.original.yearlyLastPrice}
+      </div>
+    ),
   },
 
   {

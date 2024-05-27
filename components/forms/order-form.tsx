@@ -73,7 +73,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ initialData }) => {
       setLoading(true);
       const plan = plans.find((plan) => plan.id === data2.planName);
 
-      const data = { planId: plan?.planId, userId: sesData?.user.id };
+      const data = { planId: plan?.monthlyPlanId, userId: sesData?.user.id };
       const response = await fetch(`/api/subscriptions/create`, {
         method: "POST",
         headers: {
@@ -88,7 +88,6 @@ export const OrderForm: React.FC<OrderFormProps> = ({ initialData }) => {
         subscription_id: res.response.id,
         name: "SocialPath",
         description: plan?.description,
-
 
         handler: async function (response: any) {
           // const res = await axios("/api/orders/create-order", {
