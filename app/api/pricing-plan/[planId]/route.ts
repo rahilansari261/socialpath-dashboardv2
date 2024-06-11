@@ -1,5 +1,5 @@
 // pages/api/pricing-plan.ts
-import { db } from "@/db";
+import { db } from "../../../../db";
 import { Plan } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 

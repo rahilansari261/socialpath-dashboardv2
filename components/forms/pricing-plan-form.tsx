@@ -5,8 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Plus, Trash } from "lucide-react";
 import axios from "axios";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -14,9 +13,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
-import { Heading } from "@/components/ui/heading";
+} from "../ui/form";
+import { Separator } from "../ui/separator";
+import { Heading } from "../ui/heading";
 
 // import FileUpload from "@/components/FileUpload";
 import { useToast } from "../ui/use-toast";
@@ -26,6 +25,8 @@ import { Textarea } from "../ui/textarea";
 import { v4 as uuidv4 } from "uuid";
 
 import { Label } from "../ui/label";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 const featureSchema = z.object({
   id: z.string(),
@@ -49,6 +50,13 @@ const formSchema = z.object({
     .number()
     .positive({ message: "Price must be greater than 0" })
     .lte(90, "discount can nveer be grater than 90%"),
+
+  yearlyPaddleProductId: z
+    .string()
+    .min(1, "Paddle Product Id (Yearly) is required"),
+  monthlyPaddleProductId: z
+    .string()
+    .min(1, "Paddle Product Id (Monthly) is required"),
 
   description: z
     .string()
@@ -232,6 +240,32 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
                   <FormLabel>Discount(Yearly)</FormLabel>
                   <FormControl>
                     <Input type="number" disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="yearlyPaddleProductId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Paddle Product ID(Yearly)</FormLabel>
+                  <FormControl>
+                    <Input type="text" disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="monthlyPaddleProductId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Paddle Product ID(Monthly)</FormLabel>
+                  <FormControl>
+                    <Input type="text" disabled={loading} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
