@@ -36,8 +36,8 @@ export const ConfirmOrdersTable = () => {
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Confirm Orders (${data.length})`}
-          description="Manage confirm orders "
+          title={`Orders (${data.length})`}
+          description="Manage orders "
         />
       </div>
       <Separator />

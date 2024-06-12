@@ -25,18 +25,18 @@ export const columns: ColumnDef<User>[] = [
   //   enableSorting: false,
   //   enableHiding: false,
   // },
-  {
-    accessorKey: "name",
-    header: "NAME",
-  },
+  // {
+  //   accessorKey: "name",
+  //   header: "NAME",
+  // },
   {
     accessorKey: "username",
     header: "USERNAME",
   },
-  {
-    accessorKey: "phone",
-    header: "PHONE",
-  },
+  // {
+  //   accessorKey: "phone",
+  //   header: "PHONE",
+  // },
   {
     accessorKey: "email",
     header: "EMAIL",
