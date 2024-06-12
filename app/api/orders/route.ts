@@ -1,5 +1,3 @@
-// pages/api/pricing-plan.ts
-
 import { db } from "@/db";
 
 import { NextRequest, NextResponse } from "next/server";
