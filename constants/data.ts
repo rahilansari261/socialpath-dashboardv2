@@ -9,18 +9,18 @@ export const navItems: NavItem[] = [
   },
 
   {
-    title: "Pending Orders",
-    href: "/dashboard/pending-orders",
+    title: "Orders",
+    href: "/dashboard/orders",
     icon: "pendingOrders",
-    label: "Pending Orders",
+    label: "Orders",
   },
 
-  {
-    title: "Confirm Orders",
-    href: "/dashboard/confirm-orders",
-    icon: "confirmOrders",
-    label: "Confirm Orders",
-  },
+  // {
+  //   title: "Confirm Orders",
+  //   href: "/dashboard/confirm-orders",
+  //   icon: "confirmOrders",
+  //   label: "Confirm Orders",
+  // },
   {
     title: "Pricing Plan",
     href: "/dashboard/pricing-plan",

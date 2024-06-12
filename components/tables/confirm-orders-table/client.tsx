@@ -16,7 +16,7 @@ export const ConfirmOrdersTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/orders?status=accepted");
+        const response = await axios.get("/api/orders");
 
         const data = response.data.orders.map((order: Order) => ({
           ...order,
