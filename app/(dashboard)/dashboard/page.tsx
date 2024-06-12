@@ -17,8 +17,12 @@ import {
   TabsContent,
   // TabsList, TabsTrigger
 } from "@/components/ui/tabs";
+import { db } from "@/db";
 
-export default function page() {
+export default async function page() {
+  const orderLen = await db.order.count();
+  const userLen = await db.user.count();
+
   return (
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -60,7 +64,7 @@ export default function page() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">45,369</div>
+                  <div className="text-2xl font-bold">{orderLen}</div>
                   {/* <p className="text-xs text-muted-foreground">
                     +20.1% from last month
                   </p> */}
@@ -87,7 +91,7 @@ export default function page() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">+2350</div>
+                  <div className="text-2xl font-bold">{userLen}</div>
                   {/* <p className="text-xs text-muted-foreground">
                     +180.1% from last month
                   </p> */}
