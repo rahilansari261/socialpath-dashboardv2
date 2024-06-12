@@ -61,9 +61,9 @@ export default function page() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">45,369</div>
-                  <p className="text-xs text-muted-foreground">
+                  {/* <p className="text-xs text-muted-foreground">
                     +20.1% from last month
-                  </p>
+                  </p> */}
                 </CardContent>
               </Card>
               <Card>
@@ -88,12 +88,12 @@ export default function page() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">+2350</div>
-                  <p className="text-xs text-muted-foreground">
+                  {/* <p className="text-xs text-muted-foreground">
                     +180.1% from last month
-                  </p>
+                  </p> */}
                 </CardContent>
               </Card>
-              <Card>
+              {/* <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Today Income
@@ -117,8 +117,8 @@ export default function page() {
                     +19% from last month
                   </p>
                 </CardContent>
-              </Card>
-              <Card>
+              </Card> */}
+              {/* <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     Pending Orders
@@ -142,7 +142,7 @@ export default function page() {
                     +201 since last hour
                   </p>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
             {/* <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-4">
