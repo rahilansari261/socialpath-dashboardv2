@@ -1,19 +1,14 @@
 // pages/api/create-order.js
 
 import { db } from "@/db";
-import { Order, order_status } from "@prisma/client";
+
+import { Order } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     // Extract order data from request body
-    const {
-      name,
-      pricing_plan,
-      userId,
-      razorpay_payment_id,
-      razorpay_order_id,
-    }: Order = await req.json();
+    const { name, pricing_plan, userId }: Order = await req.json();
 
     if (!name || !pricing_plan || !userId) {
       throw new Error("Missing required parameters");
@@ -24,17 +19,14 @@ export async function POST(req: NextRequest) {
       data: {
         name,
         pricing_plan,
-        status: order_status.pending,
+
         userId,
-        razorpay_payment_id,
-        razorpay_order_id,
       },
     });
 
     // Return the created order as the API response
     return NextResponse.json({ success: true, order });
   } catch (error) {
-  
     // Return an error response if something goes wrong
     return NextResponse.json({
       success: false,
