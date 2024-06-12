@@ -67,100 +67,101 @@ export const OrderForm: React.FC<OrderFormProps> = ({ initialData }) => {
     defaultValues,
     mode: "onSubmit",
   });
+  const onSubmit = async (data2: OrderFormValues) => {};
 
-  const onSubmit = async (data2: OrderFormValues) => {
-    try {
-      setLoading(true);
-      const plan = plans.find((plan) => plan.id === data2.planName);
+  // const onSubmit = async (data2: OrderFormValues) => {
+  //   try {
+  //     setLoading(true);
+  //     const plan = plans.find((plan) => plan.id === data2.planName);
 
-      const data = { planId: plan?.monthlyPlanId, userId: sesData?.user.id };
-      const response = await fetch(`/api/subscriptions/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const res = await response.json();
+  //     const data = { planId: plan?.monthlyPlanId, userId: sesData?.user.id };
+  //     const response = await fetch(`/api/subscriptions/create`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+  //     const res = await response.json();
 
-      const options = {
-        key: process.env.RAZORPAY_KEY_ID,
-        subscription_id: res.response.id,
-        name: "SocialPath",
-        description: plan?.description,
+  //     const options = {
+  //       key: process.env.RAZORPAY_KEY_ID,
+  //       subscription_id: res.response.id,
+  //       name: "SocialPath",
+  //       description: plan?.description,
 
-        handler: async function (response: any) {
-          // const res = await axios("/api/orders/create-order", {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          //   data: JSON.stringify({
-          //     name: sesData?.user.name,
-          //     pricing_plan: plan?.planName,
-          //     userId: sesData?.user.id,
-          //     razorpay_payment_id: response.razorpay_payment_id,
-          //     razorpay_order_id: response.razorpay_order_id,
-          //   }),
-          // });
+  //       handler: async function (response: any) {
+  //         // const res = await axios("/api/orders/create-order", {
+  //         //   method: "POST",
+  //         //   headers: {
+  //         //     "Content-Type": "application/json",
+  //         //   },
+  //         //   data: JSON.stringify({
+  //         //     name: sesData?.user.name,
+  //         //     pricing_plan: plan?.planName,
+  //         //     userId: sesData?.user.id,
+  //         //     razorpay_payment_id: response.razorpay_payment_id,
+  //         //     razorpay_order_id: response.razorpay_order_id,
+  //         //   }),
+  //         // });
 
-          // if (res.status === 200) {
-          //   toast({
-          //     variant: "default",
-          //     title: "Order placed.",
-          //     description: "Your order is placed successfully.",
-          //   });
-          // }
-          alert(response.razorpay_payment_id),
-            alert(response.razorpay_subscription_id),
-            alert(response.razorpay_signature);
-        },
-        prefill: {
-          name: sesData?.user.name,
-          email: sesData?.user.email,
-          contact: sesData?.user.phone,
-        },
-        notes: {
-          address: "note value",
-        },
-        theme: {
-          color: "#22bb37",
-        },
-      };
+  //         // if (res.status === 200) {
+  //         //   toast({
+  //         //     variant: "default",
+  //         //     title: "Order placed.",
+  //         //     description: "Your order is placed successfully.",
+  //         //   });
+  //         // }
+  //         alert(response.razorpay_payment_id),
+  //           alert(response.razorpay_subscription_id),
+  //           alert(response.razorpay_signature);
+  //       },
+  //       prefill: {
+  //         name: sesData?.user.name,
+  //         email: sesData?.user.email,
+  //         contact: sesData?.user.phone,
+  //       },
+  //       notes: {
+  //         address: "note value",
+  //       },
+  //       theme: {
+  //         color: "#22bb37",
+  //       },
+  //     };
 
-      // var options = {
-      //   key: process.env.RAZORPAY_KEY_ID,
-      //   subscription_id: "sub_OBzE8JUQfzPThS",
-      //   name: "Acme Corp.",
-      //   description: "Monthly Test Plan",
-      //   // image: "/your_logo.jpg",
-      //   callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
-      //   prefill: {
-      //     name: "Gaurav Kumar",
-      //     email: "gaurav.kumar@example.com",
-      //     contact: "+919876543210",
-      //   },
-      //   notes: {
-      //     note_key_1: "Tea. Earl Grey. Hot",
-      //     note_key_2: "Make it so.",
-      //   },
-      //   theme: {
-      //     color: "#F37254",
-      //   },
-      // };
+  //     // var options = {
+  //     //   key: process.env.RAZORPAY_KEY_ID,
+  //     //   subscription_id: "sub_OBzE8JUQfzPThS",
+  //     //   name: "Acme Corp.",
+  //     //   description: "Monthly Test Plan",
+  //     //   // image: "/your_logo.jpg",
+  //     //   callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
+  //     //   prefill: {
+  //     //     name: "Gaurav Kumar",
+  //     //     email: "gaurav.kumar@example.com",
+  //     //     contact: "+919876543210",
+  //     //   },
+  //     //   notes: {
+  //     //     note_key_1: "Tea. Earl Grey. Hot",
+  //     //     note_key_2: "Make it so.",
+  //     //   },
+  //     //   theme: {
+  //     //     color: "#F37254",
+  //     //   },
+  //     // };
 
-      var paymentObject = new window.Razorpay(options);
-      paymentObject.open();
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your payment.",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     var paymentObject = new window.Razorpay(options);
+  //     paymentObject.open();
+  //   } catch (error: any) {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Uh oh! Something went wrong.",
+  //       description: "There was a problem with your payment.",
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     axios
