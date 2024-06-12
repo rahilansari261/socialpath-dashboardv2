@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const orders: any = await db.order.findMany({});
+    const orders: any = await db.order.findMany();
 
     return NextResponse.json({ orders: orders });
   } catch (error: any) {
