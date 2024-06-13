@@ -1,6 +1,6 @@
 "use client";
 import * as z from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Plus, Trash } from "lucide-react";
@@ -77,15 +77,6 @@ type Feature = {
 export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
   initialData,
 }) => {
-  const defaultValues = initialData
-    ? initialData
-    : {
-        planName: "",
-        description: "",
-        price: 0,
-        features: [{ id: uuidv4(), feature: "" }],
-      };
-
   const router = useRouter();
   const { toast } = useToast();
   const [, setOpen] = useState(false);
@@ -97,12 +88,28 @@ export const PricingPlanForm: React.FC<PricingPlanFormProps> = ({
     : "Add a new pricing plan.";
   // const toastMessage = initialData ? "Product updated." : "Product created.";
   const action = initialData ? "Save changes" : "Create";
+  const defaultValues = initialData || {
+    planName: "",
+    description: "",
+    features: [{ id: uuidv4(), feature: "" }],
+    monthlyPrice: 0,
+    monthlyDiscount: 0,
+    monthlyPaddleProductId: "",
+    yearlyPrice: 0,
+    yearlyDiscount: 0,
+    yearlyPaddleProductId: "",
+  };
 
   const form = useForm<PricingPlanFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    form.reset(defaultValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialData]);
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
